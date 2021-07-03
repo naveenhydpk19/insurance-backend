@@ -66,7 +66,12 @@
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
-
+        <distributionManagement>
+  <snapshotRepository>
+    <id>nexus</id>
+    <url>http://3.233.133.227:8081/nexus/content/repositories/nexus</url>
+  </snapshotRepository>
+</distributionManagement>
 	<build>
 		<plugins>
 			<plugin>
