@@ -25,27 +25,10 @@
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>io.micrometer</groupId>
-			<artifactId>micrometer-registry-prometheus</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-actuator</artifactId>
-		</dependency>
-		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
-		<dependency>
-		    <groupId>org.springframework.metrics</groupId>
-		    <artifactId>spring-metrics</artifactId>
-		    <version>0.4.0.RELEASE</version>
-		</dependency>
-		<dependency>
-		  <groupId>io.prometheus</groupId>
-		  <artifactId>simpleclient_common</artifactId>
-		  <version>0.10.0</version>
-		</dependency>
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-devtools</artifactId>
@@ -72,14 +55,11 @@
 			<artifactId>springfox-swagger-ui</artifactId>
 			<version>2.9.2</version>
 		</dependency>
-		<!-- https://mvnrepository.com/artifact/org.codehaus.mojo/sonar-maven-plugin -->
-<dependency>
-    <groupId>org.codehaus.mojo</groupId>
-    <artifactId>sonar-maven-plugin</artifactId>
-    <version>3.9.0.2155</version>
-    <type>pom</type>
-</dependency>
-
+		<dependency>
+			<groupId>org.codehaus.mojo</groupId>
+			<artifactId>sonar-maven-plugin</artifactId>
+			<version>3.4.0.905</version>
+		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
@@ -88,16 +68,6 @@
 	</dependencies>
 
 	<build>
-		<pluginManagement>
-        <plugins>
-		<!--
-            <plugin>
-                <groupId>org.sonarsource.scanner.maven</groupId>
-                <artifactId>sonar-maven-plugin</artifactId>
-                <version>3.4.0.905</version>
-            </plugin> -->
-        </plugins>
-    </pluginManagement>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
