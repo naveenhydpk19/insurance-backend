@@ -92,6 +92,24 @@
 					</execution>
 				</executions>
 			</plugin>
+			<plugin>
+				<groupId>org.owasp</groupId>
+				<artifactId>dependency-check-maven</artifactId>
+				<version>5.3.2</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>check</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<failBuildOnCVSS>11</failBuildOnCVSS>
+					<format>ALL</format>
+					<centralAnalyzerEnabled>false</centralAnalyzerEnabled>
+					<versionCheckEnabled>true</versionCheckEnabled>
+				</configuration>
+			</plugin>
 
 		</plugins>
 	</build>
