@@ -85,9 +85,13 @@
 
 	<build>
 		<plugins>
-			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
+						<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>2.21.0</version>
+				<configuration>
+					<testFailureIgnore>true</testFailureIgnore>
+				</configuration>
 			</plugin>
 			<plugin>
 				<groupId>org.jacoco</groupId>
@@ -95,19 +99,88 @@
 				<version>0.8.2</version>
 				<executions>
 					<execution>
+						<id>prepare-agent</id>
 						<goals>
 							<goal>prepare-agent</goal>
 						</goals>
 					</execution>
-					<!-- attached to Maven test phase -->
 					<execution>
 						<id>report</id>
-						<phase>test</phase>
+						<phase>prepare-package</phase>
 						<goals>
 							<goal>report</goal>
 						</goals>
 					</execution>
+					<execution>
+						<id>post-unit-test</id>
+						<phase>test</phase>
+						<goals>
+							<goal>report</goal>
+						</goals>
+						<configuration>
+							<dataFile>target/jacoco.exec</dataFile>
+							<!-- Sets the output directory for the code coverage report. -->
+							<outputDirectory>target/jacoco-ut</outputDirectory>
+						</configuration>
+					</execution>
 				</executions>
+				<configuration>
+					<systemPropertyVariables>
+						<jacoco-agent.destfile>target/jacoco.exec</jacoco-agent.destfile>
+					</systemPropertyVariables>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>2.21.0</version>
+				<configuration>
+					<testFailureIgnore>true</testFailureIgnore>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>junit</groupId>
+				<artifactId>junit</artifactId>
+				<version>4.8.1</version>
+			</plugin>
+			<plugin>
+    				<groupId>org.apache.maven.plugins</groupId> 
+    				<artifactId>maven-dependency-plugin</artifactId> 
+    				<version>3.0.2</version> 
+    				<executions> 
+     					 <execution> 
+       					 <id>copy-dependencies</id> 
+       					 <phase>package</phase> 
+       					 <goals> 
+         					 <goal>copy-dependencies</goal> 
+        				</goals> 
+        				<configuration> 
+        				  <!-- configure the plugin here --> 
+        				</configuration> 
+     					 </execution> 
+    				</executions> 
+ 			 </plugin> 
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.owasp</groupId>
+				<artifactId>dependency-check-maven</artifactId>
+				<version>5.3.2</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>check</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<failBuildOnCVSS>11</failBuildOnCVSS>
+					<format>ALL</format>
+					<centralAnalyzerEnabled>false</centralAnalyzerEnabled>
+					<versionCheckEnabled>true</versionCheckEnabled>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>
