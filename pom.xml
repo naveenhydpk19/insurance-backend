@@ -16,10 +16,20 @@
 	<description>Demo project for Spring Boot</description>
 
 	<properties>
-		<java.version>1.8</java.version>
+		<maven.compiler.release>11</maven.compiler.release>
+		<java.version>1.11</java.version>
+		<sonar.coverage.exclusions>**parking/*,**/config/*,**/entity/*,**/dto/*,**/repository/*,**/exception/*,**/util/*</sonar.coverage.exclusions>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<sonar.host.url>http://172.17.143.181:9000</sonar.host.url>
+		<sonar.login.admin>admin</sonar.login.admin>
+		<sonar.password>admin</sonar.password>
 	</properties>
 
 	<dependencies>
+		<dependency>
+			<groupId>io.micrometer</groupId>
+			<artifactId>micrometer-registry-prometheus</artifactId>
+		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-actuator</artifactId>
@@ -57,7 +67,7 @@
 		<dependency>
 			<groupId>org.codehaus.mojo</groupId>
 			<artifactId>sonar-maven-plugin</artifactId>
-			<version>3.6.0.1398</version>
+			<version>3.4.0.905</version>
 		</dependency>
 		<dependency>
 			<groupId>io.springfox</groupId>
@@ -79,15 +89,36 @@
 	<distributionManagement>
           <snapshotRepository>
           <id>nexus</id>
-          <url>http://13.232.82.185:8081/nexus/content/repositories/snapshots/</url>
+          <url>http://172.17.143.181:8081/nexus/content/repositories/snapshots/</url>
           </snapshotRepository>
        </distributionManagement>
 
 	<build>
 		<plugins>
 			<plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>3.8.1</version>
+                </plugin>
+			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.owasp</groupId>
+				<artifactId>dependency-check-maven</artifactId>
+				<version>6.2.2</version>
+				<executions>
+					<execution>
+						<goals><goal>check</goal></goals>
+					</execution>
+				</executions>
+				<configuration>
+					<failBuildOnCVSS>11</failBuildOnCVSS>
+					<format>ALL</format>
+					<centralAnalyzerEnabled>false</centralAnalyzerEnabled>
+					<versionCheckEnabled>true</versionCheckEnabled>
+				</configuration>
 			</plugin>
 			<plugin>
 				<groupId>org.jacoco</groupId>
@@ -99,7 +130,6 @@
 							<goal>prepare-agent</goal>
 						</goals>
 					</execution>
-					<!-- attached to Maven test phase -->
 					<execution>
 						<id>report</id>
 						<phase>test</phase>
@@ -109,6 +139,7 @@
 					</execution>
 				</executions>
 			</plugin>
+
 		</plugins>
 	</build>
 
